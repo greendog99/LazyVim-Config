@@ -2,6 +2,7 @@ return {
   -- customize nvim-cmp configs
   -- Use <tab> for completion and snippets (supertab)
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
+  -- https://github.com/Vintharas/BarbaricLazyVim/blob/main/lua/plugins/nvim-cmp.lua
   {
     "L3MON4D3/LuaSnip",
     keys = function()
@@ -25,9 +26,12 @@ return {
       local luasnip = require("luasnip")
       local cmp = require("cmp")
 
+      -- Add emoji to cmp sources
+      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+
       -- This is reaaaally not easy to setup :D
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        -- <CR> should not autocomplete! Makes typing difficult.
+        -- <CR> should not autocomplete! Makes typing difficult. -MDF
         ["<CR>"] = cmp.config.disable,
         ["<Tab>"] = cmp.mapping(function(fallback)
           -- If it's a snippet then jump between fields
